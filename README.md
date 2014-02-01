@@ -2,6 +2,10 @@
 
 Safari extension to convert imperial units embedded in text to their metric equivalent.
 
+###Download
+
+Download from [here](https://github.com/mirosval/Units-Safari-Extension/blob/master/units.safariextz?raw=true)
+
 ###Example
    
 `6'2"` will be replaced with `6'2" (187.96cm)`
