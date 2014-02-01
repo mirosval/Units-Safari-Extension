@@ -1,7 +1,7 @@
 
 var replacements = [{
     // Change heights in format 6'5" to metric units
-    pattern: /(\d+)'(\d+)("|''|)/g,
+    pattern: /(\d+)'(\d*)("|''|)/g,
     func: function(match, feet, inches, p3, offset, str){
         var length = Math.round(100 * (parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54)) / 100;
 
