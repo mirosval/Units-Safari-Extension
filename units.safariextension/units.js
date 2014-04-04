@@ -30,7 +30,7 @@ var replacements = [{
     }
 },{
     /* Change weight from lbs to KG */
-    pattern: /(\d+\.?\d*) ?lbs/ig,
+    pattern: /(\d+\.?\d*) ?lbs?/ig,
     func: function(match, lbs, offset, str){
         var weight = Math.round(100 * (parseFloat(lbs) * 0.453592)) / 100;
 
