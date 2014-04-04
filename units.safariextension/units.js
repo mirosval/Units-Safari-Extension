@@ -37,7 +37,7 @@ var replacements = [{
         return match + ' (' + weight + "kg)";
     }
 },{
-    // Miles to km
+    /* Miles to km */
     pattern: /(\d+\.?\d*) ?miles?/ig,
     func: function(match, miles, offset, str){
         var dist = Math.round(100 * (parseFloat(miles) * 1.60934)) / 100;
