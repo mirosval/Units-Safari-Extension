@@ -1,6 +1,5 @@
-
 var replacements = [{
-    // Change heights in format 6'5" to metric units
+    /* Change heights in format 6'5" to metric units */
     pattern: /(\d+)'(\d*)("|''|)/g,
     func: function(match, feet, inches, p3, offset, str){
         var length = Math.round(100 * (parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54)) / 100;
@@ -12,15 +11,33 @@ var replacements = [{
         }
     }
 },{
-    // Change weight from lbs to KG
-    pattern: /(\d+\.?\d*) ?lbs/ig,
+    pattern: /(\d+)ft ?(\d*)in/g,
+    func: function(match, feet, inches, p3, offset, str){
+        var length = Math.round(100 * (parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54)) / 100;
+
+        if(length > 230) {
+            return match + ' (' + Math.round(length) / 100 + "m)";
+        } else {
+            return match + ' (' + length + "cm)";
+        }
+    }
+},{
+    pattern: /(\d+\.?\d*) ?pounds?/ig,
     func: function(match, lbs, offset, str){
         var weight = Math.round(100 * (parseFloat(lbs) * 0.453592)) / 100;
 
         return match + ' (' + weight + "kg)";
     }
 },{
-    // Miles to km
+    /* Change weight from lbs to KG */
+    pattern: /(\d+\.?\d*) ?lbs?/ig,
+    func: function(match, lbs, offset, str){
+        var weight = Math.round(100 * (parseFloat(lbs) * 0.453592)) / 100;
+
+        return match + ' (' + weight + "kg)";
+    }
+},{
+    /* Miles to km */
     pattern: /(\d+\.?\d*) ?miles?/ig,
     func: function(match, miles, offset, str){
         var dist = Math.round(100 * (parseFloat(miles) * 1.60934)) / 100;
@@ -28,7 +45,7 @@ var replacements = [{
         return match + ' (' + dist + "km)";
     }
 },{
-    // Miles to km
+    /* Miles to km */
     pattern: /(\d+\.?\d*) ?mpg/ig,
     func: function(match, mpg, offset, str){
         var lkm = Math.round(100 * (235.214 / parseFloat(mpg))) / 100;
@@ -36,7 +53,7 @@ var replacements = [{
         return match + ' (' + lkm + "L / 100km)";
     }
 },{
-    // Miles to km/h
+    /* Miles to km/h */
     pattern: /(\d+\.?\d*) ?mph/ig,
     func: function(match, miles, offset, str){
         var dist = Math.round(100 * (parseFloat(miles) * 1.60934)) / 100;
