@@ -20,4 +20,10 @@ For now it supports the following conversions:
 * miles per gallon to litres per 100 km
 * miles per hour to KM/H
 
+###Bookmarklet
+
+If you don't use Safari, the code still works as a bookmarklet.
+
+Copy and paste the code on a new bookmark, single line, and prepend `javascript:` 
+
 Contributions welcome
