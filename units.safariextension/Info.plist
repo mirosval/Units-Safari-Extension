@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Miroslav Zoricak</string>
 	<key>Builder Version</key>
-	<string>9537.75.14</string>
+	<string>11601.5.17.1</string>
 	<key>CFBundleDisplayName</key>
 	<string>Units</string>
 	<key>CFBundleIdentifier</key>
@@ -30,6 +30,8 @@
 	</dict>
 	<key>Description</key>
 	<string>Converts units to metric system</string>
+	<key>DeveloperIdentifier</key>
+	<string>JDR99549PG</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
