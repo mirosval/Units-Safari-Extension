@@ -67,12 +67,18 @@ var replacements = [{
     }
 }];
 
+let ignoreElements = [
+    "code",
+    "pre",
+    "xmp"
+]
+
 function replacePattern(node, patterns) {
     if(node.nodeType === Node.TEXT_NODE) {
         for(var i = 0, len = patterns.length; i < len; ++i) {
             node.nodeValue = node.nodeValue.replace(patterns[i].pattern, patterns[i].func);
         }
-    } else if(node.nodeType === Node.ELEMENT_NODE) {
+    } else if(node.nodeType === Node.ELEMENT_NODE && !ignoreElements.includes(node.tagName.toLowerCase())) {
         for(var i = 0, num = node.childNodes.length; i < num; ++i) {
             replacePattern(node.childNodes[i], patterns);
         }
