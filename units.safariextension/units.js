@@ -32,7 +32,7 @@ function convertFeetToSI(match, feet, inches, p3, offset, str){
     }
 }
 
-var replacements = [{
+let unitsExt_Replacements = [{
     /* Change heights in format 6'5" to metric units */
     pattern: /(\d+)'(\d*)("|''|)/g,
     func: convertFeetToSI
@@ -81,7 +81,7 @@ var replacements = [{
     }
 }];
 
-let ignoreElements = [
+let unitsExt_ignoreElements = [
     "code",
     "pre",
     "xmp"
@@ -92,11 +92,11 @@ function replacePattern(node, patterns) {
         for(var i = 0, len = patterns.length; i < len; ++i) {
             node.nodeValue = node.nodeValue.replace(patterns[i].pattern, patterns[i].func);
         }
-    } else if(node.nodeType === Node.ELEMENT_NODE && !ignoreElements.includes(node.tagName.toLowerCase())) {
+    } else if(node.nodeType === Node.ELEMENT_NODE && !unitsExt_ignoreElements.includes(node.tagName.toLowerCase())) {
         for(var i = 0, num = node.childNodes.length; i < num; ++i) {
             replacePattern(node.childNodes[i], patterns);
         }
     }
 }
 
-replacePattern(document.body, replacements);
+replacePattern(document.body, unitsExt_Replacements);
