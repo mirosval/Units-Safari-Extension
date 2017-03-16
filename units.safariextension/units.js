@@ -3,7 +3,16 @@ function wrap(str) {
 }
 
 function convertFeetToSI(match, feet, inches, p3, offset, str){
+    // Make sure that inches are always at least 0, because sometimes 
+    // people use just 6' to denote length in feet 
+    inches = inches != null && inches.trim().length > 0 ? inches : 0
+
     var length = Math.round(100 * (parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54)) / 100;
+
+    // If for some reason the length could not be computed, just leave the match alone
+    if (Number.isNaN(length)) {
+        return match
+    }
     if(length > 230) {
         return match + wrap(Math.round(length) / 100 + "m");
     } else {
