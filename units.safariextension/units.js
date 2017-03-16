@@ -13,6 +13,18 @@ function convertFeetToSI(match, feet, inches, p3, offset, str){
     if (Number.isNaN(length)) {
         return match
     }
+
+    // Here we make sure that numbers at the end of sentences surrounded by '' are left alone, as
+    // they are most likely not feet. To do that, searching at the matching location backwards,
+    // we are looking for the next position of a '. If it is not between letters (e.g. "don't") 
+    // or if there is no number preceding it (e.g. "5'") then we ignore the match
+    var stringUntilMatch = str != undefined ? str.slice(0, offset) : ""
+    stringUntilMatch = stringUntilMatch.split('').reverse().join('') //Reverse the string
+
+    if (/^(?:[^0-9]+?)'\s/.test(stringUntilMatch)) {
+        return match
+    }
+
     if(length > 230) {
         return match + wrap(Math.round(length) / 100 + "m");
     } else {
