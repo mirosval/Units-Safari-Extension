@@ -1,5 +1,6 @@
 function wrap(str) {
-  return ' (' + str + ')';
+    return ' (' + str + ')';
+}
 }
 
 var replacements = [{
