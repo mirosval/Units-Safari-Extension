@@ -3,8 +3,8 @@ function wrap(str) {
 }
 
 function convertFeetToSI(match, feet, inches, p3, offset, str){
-    // Make sure that inches are always at least 0, because sometimes 
-    // people use just 6' to denote length in feet 
+    // Make sure that inches are always at least 0, because sometimes
+    // people use just 6' to denote length in feet
     inches = inches != null && inches.trim().length > 0 ? inches : 0
 
     var length = Math.round(100 * (parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54)) / 100;
@@ -16,7 +16,7 @@ function convertFeetToSI(match, feet, inches, p3, offset, str){
 
     // Here we make sure that numbers at the end of sentences surrounded by '' are left alone, as
     // they are most likely not feet. To do that, searching at the matching location backwards,
-    // we are looking for the next position of a '. If it is not between letters (e.g. "don't") 
+    // we are looking for the next position of a '. If it is not between letters (e.g. "don't")
     // or if there is no number preceding it (e.g. "5'") then we ignore the match
     var stringUntilMatch = str != undefined ? str.slice(0, offset) : ""
     stringUntilMatch = stringUntilMatch.split('').reverse().join('') //Reverse the string
@@ -32,7 +32,7 @@ function convertFeetToSI(match, feet, inches, p3, offset, str){
     }
 }
 
-let unitsExt_Replacements = [{
+var unitsExt_Replacements = [{
     /* Change heights in format 6'5" to metric units */
     pattern: /(\d+)'(\d*)("|''|)/g,
     func: convertFeetToSI
@@ -81,7 +81,7 @@ let unitsExt_Replacements = [{
     }
 }];
 
-let unitsExt_ignoreElements = [
+var unitsExt_ignoreElements = [
     "code",
     "pre",
     "xmp"
