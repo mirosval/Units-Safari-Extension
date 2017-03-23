@@ -32,6 +32,22 @@ function convertFeetToSI(match, feet, inches, p3, offset, str){
     }
 }
 
+function zeroPad(number, length) {
+    if (number <= 1) { 
+        // Values between 0 - 1 will produce invalid lengths for leadingZeroes because of the logarithm
+        return "0" + number
+    }
+
+    var leadingZeroes = length - Math.ceil(Math.log10(number))
+
+    // If leadingZeroes is 0, the number's length is already sufficient
+    if(leadingZeroes == 0) { 
+        return number
+    }
+
+    return "0".repeat(leadingZeroes) + number
+}
+
 var unitsExt_Replacements = [{
     /* Change heights in format 6'5" to metric units */
     pattern: /(\d+)'(\d*)("|''|)/g,
@@ -78,6 +94,60 @@ var unitsExt_Replacements = [{
         var dist = Math.round(100 * (parseFloat(miles) * 1.60934)) / 100;
 
         return match + wrap(dist + "km/h");
+    }
+},{
+    /* 12 hour time to 24 hours */
+    pattern: /(\d{1,2}):?(\d{0,2})\s*(?:(p|a)\.?m\.?|(midnight|noon|[mn]\b))/ig,
+    func: function(match, h, m, meridiem, noon, offset, str){
+        var hours = parseInt(h)
+        var minutes = parseInt(m) || 0
+
+        if(meridiem != undefined) {
+            if(meridiem.toLowerCase() == "p" && hours < 12) {
+                hours += 12
+            } else if (meridiem.toLowerCase() == "a" && hours == 12) {
+                hours = 0
+            }
+        } else if (noon != undefined) {
+            if(noon.toLowerCase().startsWith("n") && hours == 12) {
+                hours = 12
+            } else if(noon.toLowerCase().startsWith("m") && hours == 12) {
+                hours = 0
+            }
+        }
+
+        return match + wrap(zeroPad(hours, 2) + ":" + zeroPad(minutes, 2))
+    }
+},{
+    /* mm/dd/YYYY to dd.mm.YYYY */
+	/* or, if a time has already been replaced: mm/dd/YYY 12h to dd.mm.YY 24h */
+    pattern: /(\d{1,2})\/(\d{1,2})\/(\d{4}|\d{2})\b(?:\s[\w\s\.:]+\s\((\d{2}:\d{2})\))?/ig,
+    func: function(match, m, d, y, timeMatch, offset, str){
+		var month = parseInt(m)
+		var day = parseInt(d)
+		var year = parseInt(y)
+
+		var currentYear = (new Date()).getUTCFullYear()
+
+		if (month > 12) {
+			// Most likely this date is in dd/mm/YYYY format, leave it alone
+			return match
+		}
+
+		if (year < 100) {
+			// Usually, when people write mm/dd/yy they mean 19yy if 20yy > currentYear, otherwise they usually mean 20yy
+			year += (2000 + year) > currentYear ? 1900 : 2000
+		}
+
+		var correctedDate = zeroPad(day, 2) + "." + zeroPad(month, 2) + "." + year
+
+		if (timeMatch === undefined) {
+			return match + wrap(correctedDate)
+		}
+		
+		var matchUntilTime = match.slice(0, match.lastIndexOf('('))
+
+		return matchUntilTime + wrap(correctedDate + " " + timeMatch)
     }
 }];
 
