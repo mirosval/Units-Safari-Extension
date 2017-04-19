@@ -50,7 +50,7 @@ function zeroPad(number, length) {
 
 var unitsExt_Replacements = [{
     /* Change heights in format 6'5" to metric units */
-    pattern: /(\d+)'(\d*)("|''|)/g,
+    pattern: /(\d+)'(?:(\d+)("|'')|(?=[\s,\.]))/g,
     func: convertFeetToSI
 },{
     pattern: /(\d+)ft ?(\d*)in/g,
