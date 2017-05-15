@@ -97,7 +97,7 @@ var unitsExt_Replacements = [{
     }
 },{
     /* 12 hour time to 24 hours */
-    pattern: /(\d{1,2}):?(\d{0,2})\s*(?:(p|a)\.?m\.?|(midnight|noon|[mn]\b))/ig,
+    pattern: /(\d{1,2}):?(\d{0,2})\s*(p|a)\.?m\.?|12\:?0?0?\s*(midnight|noon)/ig,
     func: function(match, h, m, meridiem, noon, offset, str){
         var hours = parseInt(h)
         var minutes = parseInt(m) || 0
@@ -109,9 +109,9 @@ var unitsExt_Replacements = [{
                 hours = 0
             }
         } else if (noon != undefined) {
-            if(noon.toLowerCase().startsWith("n") && hours == 12) {
+            if(noon.toLowerCase() == "noon") {
                 hours = 12
-            } else if(noon.toLowerCase().startsWith("m") && hours == 12) {
+            } else if(noon.toLowerCase() == "midnight") {
                 hours = 0
             }
         }
